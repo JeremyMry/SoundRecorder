@@ -4,17 +4,14 @@ import android.Manifest.permission.RECORD_AUDIO
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.widget.Button
 import android.widget.Chronometer
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
-import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,12 +21,11 @@ class MainActivity : AppCompatActivity() {
     private val recordButton:Button by lazy {
         findViewById(R.id.button_recording)
     }
+    private val recordsButton:Button by lazy {
+        findViewById(R.id.folder)
+    }
     private val meter:Chronometer by lazy {
         findViewById(R.id.recording_timer)
-    }
-
-    private val recordingFilePath: String by lazy {
-        "${externalCacheDir?.absolutePath}/recording.wav"
     }
 
     private val requiredPermissions = arrayOf(RECORD_AUDIO, WRITE_EXTERNAL_STORAGE)
@@ -67,6 +63,11 @@ class MainActivity : AppCompatActivity() {
             record.stopRecording()
             timer.cancelTimer(meter)
         }
+
+        recordsButton.setOnClickListener {
+            val intent = Intent(this, RecordsList::class.java)
+            startActivity(intent)
+        }
     }
 
     // Handle permissions (write/record) + shut down the app if the permissions are manually locked
@@ -81,8 +82,6 @@ class MainActivity : AppCompatActivity() {
 
                     if(permissionName == RECORD_AUDIO) {
 
-                        println(permissionName)
-
                         AlertDialog.Builder(this)
                             .setTitle("Permission Needed")
                             .setMessage("Please accept the recording permission, the application cannot work without")
@@ -91,8 +90,6 @@ class MainActivity : AppCompatActivity() {
                             }.create().show();
 
                     } else if(permissionName == WRITE_EXTERNAL_STORAGE) {
-
-                        println(permissionName)
 
                         AlertDialog.Builder(this)
                             .setTitle("Permission Needed")
@@ -104,18 +101,4 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-    // create a recording folder for the app the first time it's launched
-    /*private fun createInitialFolder(): File {
-        val folder = filesDir
-        val f = File(folder, "records")
-
-        if (!f.exists()) {
-            f.mkdir()
-        }
-
-        return f
-    }*/
-
-
 }
