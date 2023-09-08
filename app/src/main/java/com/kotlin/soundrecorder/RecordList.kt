@@ -1,10 +1,12 @@
 package com.kotlin.soundrecorder
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.MotionEvent
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -27,6 +29,9 @@ class RecordList: AppCompatActivity() {
 
     private var mediaPlayer: MediaPlayer? = null
 
+    private var reader: Boolean = false
+
+    @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -36,19 +41,36 @@ class RecordList: AppCompatActivity() {
         val list = intent.getStringExtra("listFiles")
         val records = setListContent(list)
 
+        val folder = filesDir
+        val f = File(folder, "records")
+        val f1 = File(f, list)
+        val f2 = File(f1, "/record.wav")
+
+        mediaPlayer = MediaPlayer.create(this, Uri.parse(f2.toString()))
+
         recordsListU.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
 
             if(records[id.toInt()] != "") {
 
-                val folder = filesDir
-                val f = File(folder, "records")
-                val f1 = File(f, list)
-                val f2 = File(f1, "/record.wav")
+                if(!reader) {
 
+                    reader = true
 
-                mediaPlayer = MediaPlayer.create(this, Uri.parse(f2.toString()))
-                mediaPlayer?.isLooping = true
-                mediaPlayer?.start()
+                    val folder = filesDir
+                    val f = File(folder, "records")
+                    val f1 = File(f, list)
+                    val f2 = File(f1, "/record.wav")
+
+                    mediaPlayer = MediaPlayer.create(this, Uri.parse(f2.toString()))
+                    mediaPlayer?.isLooping = false
+                    mediaPlayer?.start()
+
+                } else {
+
+                    reader = false
+                    mediaPlayer?.stop()
+
+                }
             }
         }
 

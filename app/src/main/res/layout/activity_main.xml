@@ -22,18 +22,17 @@
             android:text="Stop record"
             android:layout_width="130dp"
             android:layout_height="60dp" android:id="@+id/button_stop_recording"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.743" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.782"/>
+            app:layout_constraintHorizontal_bias="0.634" app:layout_constraintStart_toEndOf="@+id/button_recording"/>
     <Button
             android:text="Record"
             android:layout_width="130dp"
             android:layout_height="60dp" android:id="@+id/button_recording"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.231"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.743"/>
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.743" android:layout_marginLeft="36dp"
+            android:layout_marginStart="36dp"/>
     <Button
             android:text="Records"
             android:layout_width="wrap_content"
