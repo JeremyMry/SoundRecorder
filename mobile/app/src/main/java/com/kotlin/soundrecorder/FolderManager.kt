@@ -28,8 +28,8 @@ class FolderManager {
 
         val dateFormatter = DateTimeFormatter.ofPattern("ddMMyyyy_HHmm")
         val localDateFormatted = LocalDateTime.now().format(dateFormatter)
-        val f1 = File(file, localDateFormatted);
-        f1.mkdirs();
+        val f1 = File(file, localDateFormatted)
+        f1.mkdirs()
 
         return "$f1/record.wav"
     }
