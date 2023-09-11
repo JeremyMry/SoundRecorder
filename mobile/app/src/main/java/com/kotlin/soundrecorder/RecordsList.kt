@@ -3,6 +3,7 @@ package com.kotlin.soundrecorder
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.StrictMode
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
@@ -21,6 +22,9 @@ class RecordsList: AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.records_list)
+
+        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
 
         val records = setListContent()
 

@@ -7,6 +7,7 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.StrictMode
 import android.view.MotionEvent
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -40,6 +41,9 @@ class RecordList: AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.record_list)
+
+        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
 
         val list = intent.getStringExtra("listFiles")
         val records = setListContent(list)

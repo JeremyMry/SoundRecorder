@@ -20,7 +20,7 @@ class SendAudioFile {
         jsonObject.put("audio", base64)
         val jsonString = jsonObject.toString()
 
-        val url = URL("http://localhost:8080/test")
+        val url = URL("http://10.0.2.2:8080/test")
         val connection = url.openConnection() as HttpURLConnection
         connection.doOutput = true
         connection.requestMethod = "POST"
@@ -29,6 +29,7 @@ class SendAudioFile {
         connection.readTimeout = 5000
 
         val outputStream = connection.outputStream
+
         outputStream.write(jsonString.toByteArray(Charset.defaultCharset()))
         outputStream.flush()
         outputStream.close()
